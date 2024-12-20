@@ -9,8 +9,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        turquoise: "#00BFA6",
+        "turquoise-dark": "#00897B",
+      },
+      fontFamily: {
+        "e-Ukraine": ["e-Ukraine", "sans-serif"],
+        bebas_neue: ["bebas_neue", "sans-serif"],
       },
     },
   },
