@@ -36,7 +36,7 @@ const ProductDetailsModal = ({
           />
         </div>
         <div className="p-6">
-          <div className="relative flex justify-center min-h-[400px]">
+          <div className="relative flex justify-center min-h-[300px]">
             <Image
               src={`/images/products/${product.image}`}
               alt={product.name}
