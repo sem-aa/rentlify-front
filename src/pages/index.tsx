@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, FormEvent, useCallback } from "react";
+import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { Product, SearchParams } from "@/types";
 import ProductList from "@/components/ProductList";
@@ -123,56 +124,66 @@ const Home = ({ products }: HomeProps) => {
   );
 
   return (
-    <Layout>
-      <SearchBar
-        arrayLocations={locations}
-        params={params}
-        setParams={setParams}
-        resetFilter={resetFilter}
-        onSearch={handleSearch}
-        resetAllFilters={resetAllFilters}
-        fetchWhithLocation={fetchWhithLocation}
-      />
-      <CategoryList
-        categories={categories}
-        onCategoryClick={fetchCategories}
-        activeCategory={params.category || "Всі категорії"}
-      />
-
-      <div className="m-4">
-        {searchProducts.length ? (
-          <>
-            {searchLoading ? (
-              <Loader />
-            ) : (
-              <ProductList
-                products={searchProducts}
-                onProductClick={handleProductClick}
-              />
-            )}
-          </>
-        ) : (
-          <div className="flex items-center flex-col gap-4 p-4">
-            <p className="text-gray-700 text-center">
-              Ми не звайшли товарів з обраними фільтрами
-            </p>
-            <button
-              onClick={resetAllFilters}
-              className="px-4 py-2 bg-turquoise text-white rounded-lg hover:bg-turquoise-dark transition"
-            >
-              Переглянути всі товари
-            </button>
-          </div>
-        )}
-      </div>
-
-      {selectedProduct && (
-        <ProductDetailsModal
-          product={selectedProduct}
-          onClose={handleCloseModal}
+    <>
+      <Head>
+        <title>Rentlify</title>
+        <meta
+          name="description"
+          content="Rentlify - Find and rent the best products easily."
         />
-      )}
-    </Layout>
+        <meta name="keywords" content="rent, products, rentlify, home" />
+      </Head>
+      <Layout>
+        <SearchBar
+          arrayLocations={locations}
+          params={params}
+          setParams={setParams}
+          resetFilter={resetFilter}
+          onSearch={handleSearch}
+          resetAllFilters={resetAllFilters}
+          fetchWhithLocation={fetchWhithLocation}
+        />
+        <CategoryList
+          categories={categories}
+          onCategoryClick={fetchCategories}
+          activeCategory={params.category || "Всі категорії"}
+        />
+
+        <div className="m-4">
+          {searchProducts.length ? (
+            <>
+              {searchLoading ? (
+                <Loader />
+              ) : (
+                <ProductList
+                  products={searchProducts}
+                  onProductClick={handleProductClick}
+                />
+              )}
+            </>
+          ) : (
+            <div className="flex items-center flex-col gap-4 p-4">
+              <p className="text-gray-700 text-center">
+                Ми не звайшли товарів з обраними фільтрами
+              </p>
+              <button
+                onClick={resetAllFilters}
+                className="px-4 py-2 bg-turquoise text-white rounded-lg hover:bg-turquoise-dark transition"
+              >
+                Переглянути всі товари
+              </button>
+            </div>
+          )}
+        </div>
+
+        {selectedProduct && (
+          <ProductDetailsModal
+            product={selectedProduct}
+            onClose={handleCloseModal}
+          />
+        )}
+      </Layout>
+    </>
   );
 };
 
