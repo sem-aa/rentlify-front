@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Product } from "@/types";
 import { ButtonClose } from "./ButtonClose";
 import useClickOutside from "@/hooks/useClickOutSide";
+import Loader from "./Loader";
 
 interface ProductDetailsModalProps {
   product: Product;
@@ -13,6 +14,7 @@ const ProductDetailsModal = ({
   product,
   onClose,
 }: ProductDetailsModalProps) => {
+  const [loading, setLoading] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null!);
   useClickOutside(modalRef, onClose);
 
@@ -34,14 +36,20 @@ const ProductDetailsModal = ({
           />
         </div>
         <div className="p-6">
-          <div className="flex justify-center">
+          <div className="relative flex justify-center min-h-[400px]">
             <Image
               src={`/images/products/${product.image}`}
               alt={product.name}
               width={400}
               height={400}
               className="rounded-lg object-contain w-auto h-auto"
+              onLoad={() => setLoading(true)}
             />
+            {!loading && (
+              <div className="absolute">
+                <Loader />
+              </div>
+            )}
           </div>
           <div className="mt-4">
             <h2 className="text-2xl font-semibold text-gray-800">
