@@ -1,17 +1,40 @@
-import { useState, useEffect, useMemo, FormEvent, useCallback } from "react";
+import dynamic from "next/dynamic";
+import {
+  useState,
+  useEffect,
+  useMemo,
+  FormEvent,
+  useCallback,
+  memo,
+} from "react";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { Product, SearchParams } from "@/types";
-import ProductList from "@/components/ProductList";
-import Loader from "@/components/Loader";
-import ProductDetailsModal from "@/components/ProductDetailsModal";
-import SearchBar from "@/components/SearchBar";
-import CategoryList from "@/components/CategoryList";
 import {
   fetchFilteredProductsApi,
   fetchAllProductsApi,
 } from "@/pages/api/products";
 import Layout from "@/components/Layout";
+import Loader from "@/components/Loader";
+
+const ProductList = dynamic(() => import("@/components/ProductList"), {
+  loading: () => <Loader />,
+});
+
+const ProductDetailsModal = dynamic(
+  () => import("@/components/ProductDetailsModal"),
+  {
+    loading: () => <Loader />,
+  },
+);
+
+const SearchBar = dynamic(() => import("@/components/SearchBar"), {
+  loading: () => <Loader />,
+});
+
+const CategoryList = dynamic(() => import("@/components/CategoryList"), {
+  loading: () => <Loader />,
+});
 
 interface HomeProps {
   products: Product[];
@@ -205,4 +228,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 };
 
-export default Home;
+export default memo(Home);
